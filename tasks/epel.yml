@@ -1,5 +1,5 @@
 ---
-- name: Query installed packages for EPEL
+- name: Query installed packages for Extra Packages for Enterprise Linux (epel)
   tags: linuxdash
   register: linuxdash_query_installed_packages
   command: rpm -qa epel-release
