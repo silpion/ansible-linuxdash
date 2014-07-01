@@ -1,0 +1,13 @@
+---
+linuxdash_package_list:
+  - git
+  - php-fpm
+  - php
+  - nginx
+linuxdash_package_list_selinux:
+  - libselinux-python
+
+linuxdash_fpm_service: php-fpm
+linuxdash_fpm_confd: /etc/php-fpm.d
+
+linuxdash_nginx_confd: /etc/nginx/conf.d

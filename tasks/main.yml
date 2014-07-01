@@ -1,2 +1,96 @@
 ---
-# tasks file for ansible-linuxdash
+# Fail the play if running on an unsupported platform
+- name: Assert platform is supported
+  tags: linuxdash
+  assert:
+    that:
+      - ansible_os_family in ['Debian', 'RedHat']
+
+
+# manage installation of required packages
+- include_vars: "{{ ansible_os_family }}.yml"
+  tags: linuxdash
+
+# update package cache for Debian based distributions
+- name: Update apt package caches
+  tags: linuxdash
+  apt:
+    update_cache=yes
+    cache_valid_time=3600
+
+# manage SELinux
+- include: selinux.yml
+  tags: linuxdash
+
+# RedHat EPEL (Extra Packages for Enterprise Linux)
+- include: epel.yml
+  tags: linuxdash
+  when: ansible_os_family == 'RedHat'
+
+- name: Install required packages
+  tags: linuxdash
+  with_items: linuxdash_package_list
+  action: "{{ ansible_pkg_mgr }} state=installed name={{ item }}"
+
+# create linuxdash user and group
+#   group
+- name: Install linuxdash group
+  tags: linuxdash
+  group:
+    state=present
+    name={{ linuxdash_group }}
+    system=yes
+#   user
+- name: Install linuxdash user
+  tags: linuxdash
+  user:
+    state=present
+    name={{ linuxdash_user }}
+    group={{ linuxdash_group }}
+    home={{ linuxdash_install_dir }}
+    createhome=yes
+    system=yes
+
+# Install linuxdash from git
+- name: Install linuxdash installation directory
+  tags: linuxdash
+  file:
+    state=directory
+    dest={{ linuxdash_install_dir }}
+    owner={{ linuxdash_user }}
+    group={{ linuxdash_group }}
+    mode=0755
+
+- name: Install linuxdash web application
+  tags: linuxdash
+  sudo: yes
+  sudo_user: "{{ linuxdash_user }}"
+  git:
+    dest={{ linuxdash_install_dir }}/linuxdash
+    repo={{ linuxdash_git_repository }}
+    version={{ linuxdash_git_version }}
+    update=yes
+
+
+# Setup FPM
+- name: Install fpm configuration for linuxdash
+  tags: linuxdash
+  notify: service restart php-fpm
+  template:
+    src=fpm.conf.j2
+    dest={{ linuxdash_fpm_confd }}/linuxdash.conf
+    owner=0
+    group=0
+    mode=0644
+
+
+# Setup nginx
+- name: Install nginx configuration for linuxdash
+  tags: linuxdash
+  notify: service restart nginx
+  template:
+    src=nginx.conf.j2
+    dest={{ linuxdash_nginx_confd }}/linuxdash.conf
+    owner=0
+    group=0
+    mode=0644
