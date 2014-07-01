@@ -15,7 +15,7 @@
 server {
   listen {{ linuxdash_nginx_listen }};
   server_name {{ linuxdash_nginx_server_name }};
-  root {{ linuxdash_install_dir }}/linuxdash;
+  root {{ linuxdash_install_dir }};
   index index.html index.php;
   error_log {{ linuxdash_nginx_log_error }};
   access_log {{ linuxdash_nginx_log_access }};
@@ -30,7 +30,7 @@ server {
 
   location ~ \.php(/|$) {
     fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-    fastcgi_pass unix:{{ linuxdash_install_dir }}/php-fpm.sock;
+    fastcgi_pass unix:{{ linuxdash_home_dir }}/php-fpm.sock;
     if (!-f $document_root$fastcgi_script_name) {
       return 404;
     }

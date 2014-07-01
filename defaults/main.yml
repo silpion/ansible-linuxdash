@@ -4,7 +4,7 @@
 # user and installation configuration
 linuxdash_user: dash
 linuxdash_group: dash
-linuxdash_install_dir: /srv/linuxdash
+linuxdash_home_dir: /srv/linuxdash
 
 # nginx configuration
 linuxdash_nginx_listen: 8088

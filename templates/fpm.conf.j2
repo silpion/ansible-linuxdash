@@ -13,9 +13,9 @@
 #                  ||    ||
 
 [linuxdash]
-prefix = {{ linuxdash_install_dir }}/linuxdash
+prefix = {{ linuxdash_install_dir }}
 
-listen = {{ linuxdash_install_dir }}/php-fpm.sock
+listen = {{ linuxdash_home_dir }}/php-fpm.sock
 listen.mode = 0600
 listen.owner = {{ linuxdash_user }}
 listen.group = {{ linuxdash_group }}
@@ -30,7 +30,7 @@ pm.start_servers = 10
 pm.min_spare_servers = 5
 pm.max_spare_servers = 10
 
-chdir = {{ linuxdash_install_dir }}/linuxdash
+chdir = {{ linuxdash_install_dir }}
 
 php_value[memory_limit] = 32M
 

@@ -3,6 +3,8 @@
 #   Version of our role.
 linuxdash_role_version: 0.1.0
 
+linuxdash_install_dir: "{{ linuxdash_home_dir }}/linuxdash"
+
 linuxdash_git_repository: https://github.com/afaqurk/linux-dash.git
 linuxdash_git_version: 0.5
 

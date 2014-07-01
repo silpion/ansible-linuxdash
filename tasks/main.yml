@@ -14,6 +14,7 @@
 # update package cache for Debian based distributions
 - name: Update apt package caches
   tags: linuxdash
+  when: ansible_os_family == 'Debian'
   apt:
     update_cache=yes
     cache_valid_time=3600
@@ -47,7 +48,7 @@
     state=present
     name={{ linuxdash_user }}
     group={{ linuxdash_group }}
-    home={{ linuxdash_install_dir }}
+    home={{ linuxdash_home_dir }}
     createhome=yes
     system=yes
 
@@ -56,7 +57,7 @@
   tags: linuxdash
   file:
     state=directory
-    dest={{ linuxdash_install_dir }}
+    dest={{ linuxdash_home_dir }}
     owner={{ linuxdash_user }}
     group={{ linuxdash_group }}
     mode=0755
@@ -66,7 +67,7 @@
   sudo: yes
   sudo_user: "{{ linuxdash_user }}"
   git:
-    dest={{ linuxdash_install_dir }}/linuxdash
+    dest={{ linuxdash_install_dir }}
     repo={{ linuxdash_git_repository }}
     version={{ linuxdash_git_version }}
     update=yes
