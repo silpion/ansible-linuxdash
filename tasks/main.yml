@@ -52,6 +52,15 @@
     createhome=yes
     system=yes
 
+# The webserver runs as a different user and requires write access
+#   to our fpm socket which is writable by owner and group
+- name: Add webserver user to linuxdash group
+  tags: linuxdash
+  user:
+    state=present
+    name={{ linuxdash_nginx_user }}
+    groups={{ linuxdash_group }}
+
 # Install linuxdash from git
 - name: Install linuxdash installation directory
   tags: linuxdash
@@ -86,6 +95,14 @@
 
 
 # Setup nginx
+- name: Disable nginx default website
+  tags: linuxdash
+  notify: service restart nginx
+  file:
+    state=absent
+    path={{ linuxdash_nginx_site_default }}
+
+
 - name: Install nginx configuration for linuxdash
   tags: linuxdash
   notify: service restart nginx
