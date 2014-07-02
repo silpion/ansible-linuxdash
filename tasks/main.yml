@@ -112,3 +112,12 @@
     owner=0
     group=0
     mode=0644
+
+- name: Enable services
+  tags: linuxdash
+  with_items:
+    - nginx
+    - "{{ linuxdash_fpm_service }}"
+  service:
+    enabled=true
+    name={{ item }}
