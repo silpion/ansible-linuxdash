@@ -1,2 +1,13 @@
 ---
-# vars file for ansible-linuxdash
+# Static variables/constants.
+#   Version of our role.
+linuxdash_role_version: 0.1.1
+
+linuxdash_install_dir: "{{ linuxdash_home_dir }}/linuxdash"
+
+linuxdash_git_repository: https://github.com/afaqurk/linux-dash.git
+linuxdash_git_version: 0.5
+
+linuxdash_epel_version: 6-8
+linuxdash_epel_mirror: http://ftp-stud.hs-esslingen.de/pub/epel/6/i386
+linuxdash_epel_sha256sum: e5ed9ecf22d0c4279e92075a64c757ad2b38049bcf5c16c4f2b75d5f6860dc0d

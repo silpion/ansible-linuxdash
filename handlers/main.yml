@@ -1,2 +1,14 @@
 ---
 # handlers file for ansible-linuxdash
+- name: service restart php-fpm
+  tags: linuxdash
+  service:
+    state=restarted
+    name={{ linuxdash_fpm_service }}
+
+- name: service restart nginx
+  tags: linuxdash
+  service:
+    state=restarted
+    name=nginx
+
