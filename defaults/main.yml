@@ -1,2 +1,13 @@
 ---
 # defaults file for ansible-linuxdash
+
+# user and installation configuration
+linuxdash_user: dash
+linuxdash_group: dash
+linuxdash_home_dir: /srv/linuxdash
+
+# nginx configuration
+linuxdash_nginx_listen: 8088
+linuxdash_nginx_server_name: localhost
+linuxdash_nginx_log_error: /var/log/nginx/linuxdash.error.log
+linuxdash_nginx_log_access: /var/log/nginx/linuxdash.access.log

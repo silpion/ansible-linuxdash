@@ -1,0 +1,18 @@
+---
+- name: Query installed packages for Extra Packages for Enterprise Linux (epel)
+  tags: linuxdash
+  register: linuxdash_query_installed_packages
+  command: rpm -qa epel-release
+
+- name: Download epel-release package
+  tags: linuxdash
+  when: '"epel-release" not in linuxdash_query_installed_packages.stdout'
+  get_url:
+    url={{ linuxdash_epel_mirror }}/epel-release-{{ linuxdash_epel_version }}.noarch.rpm
+    dest=/usr/local/src/epel-release-{{ linuxdash_epel_version }}.noarch.rpm
+    sha256sum={{ linuxdash_epel_sha256sum }}
+
+- name: Install epel-release package
+  tags: linuxdash
+  when: '"epel-release" not in linuxdash_query_installed_packages.stdout'
+  command: rpm -ivH /usr/local/src/epel-release-{{ linuxdash_epel_version }}.noarch.rpm
