@@ -10,4 +10,6 @@ linuxdash_package_list_selinux:
 linuxdash_fpm_service: php-fpm
 linuxdash_fpm_confd: /etc/php-fpm.d
 
+linuxdash_nginx_user: nginx
 linuxdash_nginx_confd: /etc/nginx/conf.d
+linuxdash_nginx_site_default: /etc/nginx/conf.d/default.conf

@@ -16,7 +16,7 @@
 prefix = {{ linuxdash_install_dir }}
 
 listen = {{ linuxdash_home_dir }}/php-fpm.sock
-listen.mode = 0600
+listen.mode = 0664
 listen.owner = {{ linuxdash_user }}
 listen.group = {{ linuxdash_group }}
 
