@@ -58,6 +58,7 @@
   tags: linuxdash
   user:
     state=present
+    append=yes
     name={{ linuxdash_nginx_user }}
     groups={{ linuxdash_group }}
 
