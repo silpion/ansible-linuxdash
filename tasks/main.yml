@@ -12,7 +12,7 @@
   tags: linuxdash
 
 # update package cache for Debian based distributions
-- name: Update apt package caches
+- name: Update apt package cache
   tags: linuxdash
   when: ansible_os_family == 'Debian'
   apt:
